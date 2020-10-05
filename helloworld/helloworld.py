@@ -19,11 +19,7 @@ class HelloWorldExample:
                         "SET a.message = $message "
                         "RETURN '\"' + a.message + '\"' + ' from node ' + id(a)", 
                         message=message)
-        #result = tx.run("MATCH (a:Greeting) "
-        #                "DELETE a")
-        #                "RETURN a.message + ', from node ' + id(a)")
         return result.single()[0]
-        #return result.values()
 
 
 if __name__ == "__main__":
