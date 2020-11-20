@@ -6,7 +6,10 @@ import_query = '''USING PERIODIC COMMIT
                MERGE (article:Article {title: row.title})
                ON CREATE SET article.doi = row.doi,
                              article.abstract = row.abstract,
-                             article.categories = row.categories'''
+                             article.categories = row.categories
+               FOREACH (name in split(row.authors, ";") |
+                             MERGE (author:Author{name:name})
+                             MERGE (author)-[:WROTE]-(article))'''
 
 def importing(uri, user, password):
     driver = GraphDatabase.driver(uri, auth=(user, password))
