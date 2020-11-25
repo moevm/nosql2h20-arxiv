@@ -13,12 +13,14 @@ export default function Author() {
     // Примечание: пустой массив зависимостей [] означает, что
     // этот useEffect будет запущен один раз
     // аналогично componentDidMount()
-
+    CellFormatter(cell, row) {
+    return (<div><a href={cell+"/"+row.age}>{cell}</a></div>);
+  }
     const handleChange = () => {
-        console.log('AAAAA')
+        //console.log('AAAAA')
         const inf = inform.current;
         if (inf !== null) {
-            console.log(inf.value)
+            //console.log(inf.value)
             setAuthor(inf.value)
         }
     }
@@ -60,13 +62,13 @@ export default function Author() {
     } else if (!isLoaded) {
         return <div>Загрузка...</div>;
     } else {
-        console.log(author)
-        console.log(json)
+        //console.log(author)
+        //console.log(json)
         return (
             <div>
                 <input ref={inform}/>
                 <button onClick={handleChange}>Search</button>
-                <BootstrapTable keyField='id' data={json} columns={columns}/>
+                <BootstrapTable keyField='id' data={json} columns={columns} onTableChange={onTableChange}/>
             </div>
         );
     }
