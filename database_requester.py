@@ -19,6 +19,20 @@ class DatabaseRequester:
                                " RETURN a.name", ids=ids)
             return res.value()
 
+    def get_colleagues_of_author(self, author_id):
+        with self.driver.session() as session:
+            res = session.run("MATCH (a:Author)-[:WROTE]-()-[:WROTE]-(b:Author)"
+                              " WHERE id(a) = $author_id"
+                               " RETURN id(b)", author_id=author_id)
+            return res.value()
+
+    def get_related_to_author(self, author_id):
+        with self.driver.session() as session:
+            res = session.run("MATCH (a:Author)-[:WROTE*1..5]-(b:Author)"
+                              " WHERE id(a) = $author_id"
+                               " RETURN id(b)", author_id=author_id)
+            return res.value()
+
         
     def get_author_articles_ids(self, author_id):
         with self.driver.session() as session:
@@ -39,6 +53,13 @@ if __name__ == "__main__":
     ids = req.get_authors_ids("Xu*")
     names = req.get_authors_names(ids)
     print(names)
+    ids = req.get_colleagues_of_author(ids[0])
+    print(ids)
+    names = req.get_authors_names(ids)
+    print(names)
+    ids = req.get_related_to_author(ids[0])
+    print(ids)
+
 
     ids = req.get_author_articles_ids(ids[0])
     print(ids)
