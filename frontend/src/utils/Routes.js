@@ -3,6 +3,7 @@ import {Route, Switch} from "react-router-dom";
 import Home from "../pages/Home";
 import Author from "../pages/Author";
 import Author_page from "../pages/Author_page";
+import Article_page from "../pages/Article_page";
 import Category from "../pages/Category";
 import Article from "../pages/Article";
 import Statistics from "../pages/Statistics";
@@ -16,6 +17,7 @@ export default function Routes() {
             <Route path="/category" component={Category}/>
             <Route path="/author" component={Author}/>
             <Route path="/author_page/:author_page" component={Author_page} />
+            <Route path="/article_page/:article_page" component={Article_page} />
         </Switch>
     );
 }
