@@ -65,6 +65,11 @@ export default function Author_page(props) {
                         Back to author search
                     </Button>
                 </Link>
+                <Link to="/article">
+                    <Button size="lg">
+                        Back to article search
+                    </Button>
+                </Link>
             </div>
         );
     }
