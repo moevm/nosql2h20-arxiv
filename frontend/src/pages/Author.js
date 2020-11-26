@@ -1,6 +1,5 @@
 import React, {useState, useEffect, createRef} from "react";
 import {InputGroup, FormControl, Table} from "react-bootstrap";
-import BootstrapTable from "react-bootstrap-table-next";
 import '../App.css';
 
 export default function Author() {
@@ -78,8 +77,8 @@ export default function Author() {
                         {json.map((json_value, index) => (
                             <tr key={index}>
                                 <th>{json_value.id}</th>
-                                <th><a href='https://react-bootstrap.github.io/components/navbar/'>{json_value.name}</a></th>
-                                <th>{json_value.article}</th>
+                                <th><a href={'http://localhost:3000/author_page/'+json_value.name}>{json_value.name}</a></th>
+                                <th><a href={'http://localhost:3000/article_page/'+json_value.article}>{json_value.article}</a></th>
                             </tr>
                         ))}
                     </tbody>
