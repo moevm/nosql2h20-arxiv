@@ -55,7 +55,9 @@ export default function Article_page(props) {
         //console.log(json)
         return (
             <div>
-                <div><h3>{props.match.params.article_page}</h3></div>
+                <div>
+                    <h3>{props.match.params.article_page}</h3>
+                </div>
                 <Table>
                     <thead>
                         <tr>
@@ -67,7 +69,25 @@ export default function Article_page(props) {
                     <tbody>
                         {json.map((json_value, index) => (
                             <tr key={index}>
-                                <th><a href={'http://localhost:3000/author_page/'+json_value.author_name}>{json_value.author_name}</a></th>
+                                <tr>
+                                    <th>
+                                        <h4>
+                                            <a href={'http://localhost:3000/author_page/' + json_value.author_name}>
+                                                {json_value.author_name}
+                                            </a>
+                                        </h4>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <h4>
+                                        doi:{json_value.doi}
+                                    </h4>
+                                </tr>
+                                <tr>
+                                    <h4>
+                                        {json_value.abstract}
+                                    </h4>
+                                </tr>
                             </tr>
                         ))}
                     </tbody>
