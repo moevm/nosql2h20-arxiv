@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from utils.author import Author
+from utils.co_author import CoAuthors
 from utils.statistics import Stat
 from utils.article import Article
 from utils.category import Category
@@ -13,6 +14,7 @@ api = Api(app)
 CORS(app)
 
 api.add_resource(Author, '/author')
+api.add_resource(CoAuthors, '/co_author')
 api.add_resource(Author_page, '/author_page')
 api.add_resource(Stat, '/statistics')
 api.add_resource(Article, '/article')
