@@ -9,9 +9,11 @@ def get_co_author(co_authors,req):
     answer = [{
         "author_name":co_authors,
         'co_authors':[
-        "Amir",
-        "Marlen",
-        "Kate"
+        {'name':"Amir",'article_name':'kek'},
+        {'name':"Marlen",'article_name':'kek'},
+        {'name':"Kate",'article_name':'kek'},
+        {'name':"Kate",'article_name':'kek'},
+        {'name':"Kate",'article_name':'kek'}
         ]
     }]
 
