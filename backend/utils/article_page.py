@@ -7,7 +7,7 @@ parser.add_argument('article_page',location='args')
 
 def get_article_page(article_page,req):
     answer = [
-        {'id': '1', 'article_name': 'Sliding-Window QPS (SW-QPS): A Perfect Parallel Iterative Switching\n Algorithm for Input-Queued Switches', 'author_name': 'Xu'}
+        {'id': '1', 'article_name': 'Sliding-Window QPS (SW-QPS): A Perfect Parallel Iterative Switching\n Algorithm for Input-Queued Switches', 'author_name': 'Xu','doi':123,'abstract':'abstract of this article'}
     ]
     return answer
 

@@ -9,18 +9,12 @@ def get_author(author,req):
     answer = []
     ids = req.get_authors_ids(author)
     if len(ids)==0:
-        answer = [
-            {'id': 'loading...', 'name': 'loading...', 'article': 'loading...'}
-        ]
         return answer
     names = req.get_authors_names(ids)
     new_ids = req.get_author_articles_ids(ids)
     author_ids = [i[0] for i in new_ids]
     article_ids = [i[1] for i in new_ids]
     if len(new_ids)==0:
-        answer = [
-            {'id': 'loading...', 'name': 'loading...', 'article': 'loading...'}
-        ]
         return answer
     info = req.get_article_info(article_ids)
     print(info)
