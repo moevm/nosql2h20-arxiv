@@ -6,9 +6,15 @@ parser = reqparse.RequestParser()
 parser.add_argument('category', location='args')
 
 def get_category(category,req):
-    answer = [{
-    'id':12,'category_name':'Biology','author_name':'Xu','article_name':'Sliding-Window QPS (SW-QPS): A Perfect Parallel Iterative Switching\n Algorithm for Input-Queued Switches'
-    }]
+    answer = []
+    if category == '':
+        return answer
+    print(category)
+    articles = req.get_articles_by_category(category)
+    print(len(articles))
+    articles_info = req.get_article_info(articles)
+    for article,article_info in zip(articles,articles_info):
+        answer.append({'article_name':article_info[0],'article_id':article})
     return answer
 
 class Category(Resource):
