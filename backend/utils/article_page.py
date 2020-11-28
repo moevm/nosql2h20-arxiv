@@ -6,9 +6,18 @@ parser = reqparse.RequestParser()
 parser.add_argument('article_page',location='args')
 
 def get_article_page(article_page,req):
-    answer = [
-        {'id': '1', 'article_name': 'Sliding-Window QPS (SW-QPS): A Perfect Parallel Iterative Switching\n Algorithm for Input-Queued Switches', 'author_name': 'Xu','doi':123,'abstract':'abstract of this article'}
-    ]
+    answer =[]
+    print(article_page)
+    if article_page == '':
+        return [{}]
+    article_info = req.get_article_info([int(article_page)])
+    print(article_info)
+    answer = [{
+            'article_name':article_info[0][0],
+            'doi':article_info[0][1],
+            'category':article_info[0][2],
+            'abstract':article_info[0][3]
+        }]
     return answer
 
 class Article_page(Resource):
