@@ -55,11 +55,28 @@ class DatabaseRequester:
                                " RETURN id(a) LIMIT 10", reg_title=reg_title)
             return res.value()
 
+    def get_articles_by_category(self, category):
+        with self.driver.session() as session:
+            res = session.run("MATCH (a:Article)"
+                              " WHERE a.categories =~ $reg_category"
+                               " RETURN id(a) LIMIT 10", reg_category='.*'+category+'.*')
+            return res.value()
+
+    def get_categories_statistics(self):
+        with self.driver.session() as session:
+            res = session.run("MATCH (a:Article)"
+                               " UNWIND split(a.categories, ' ') AS cat"
+                               " RETURN cat, count(a)")
+            return res.values()
+
 
 
 if __name__ == "__main__":
     req = DatabaseRequester("neo4j://localhost:7687", "neo4j", "password")
     ids = req.get_authors_ids("Xu*")
+    print(ids)
+    res = req.get_authors_names(ids)
+    print(res)
     '''names = req.get_authors_names(ids)
     print(names)
     ids = req.get_colleagues_of_author(ids[0])
@@ -75,7 +92,12 @@ if __name__ == "__main__":
     info = req.get_article_info(ids[0])
     print(info)
     '''
-    ids = req.get_articles_ids("Sliding-Window QPS (SW-QPS): A Perfect Parallel Iterative Switching\\n  Algorithm for Input-Queued Switches")
+
+    res = req.get_categories_statistics1()
+    print(res)
+    '''
+    ids = req.get_articles_by_category("hep-ph")
     print(ids)
     info = req.get_article_info(ids)
     print(info)
+    '''
