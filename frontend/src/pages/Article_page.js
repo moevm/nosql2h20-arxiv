@@ -43,7 +43,18 @@ export default function Article_page(props) {
     const columns = [
         {
             dataField: "author_name",
-            text: 'Author name'
+            text: 'Author name',
+
+        },
+        {
+            dataField: "author_name",
+            text: 'Author name',
+
+        },
+        {
+            dataField: "author_name",
+            text: 'Author name',
+
         }
     ];
     if (error) {
@@ -55,45 +66,47 @@ export default function Article_page(props) {
         //console.log(json)
         return (
             <div>
-                <div>
+                <h2>
                     {json.map((value, index) => (
                         <th key={index}>{value.article_name}</th>
                     ))}
-                </div>
+                </h2>
+
                 <Table>
-                    <thead>
-                        <tr>
-                            {columns.map((value, index) => (
-                                <th key={index}>{value.text}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {json.map((json_value, index) => (
-                            <tr key={index}>
-                                <tr>
-                                    <th>
-                                        <h4>
-                                            <a href={'http://localhost:3000/author_page/' + json_value.id}>
-                                                {json_value.author_name}
-                                            </a>
-                                        </h4>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <h4>
-                                        doi:{json_value.doi}
-                                    </h4>
-                                </tr>
-                                <tr>
-                                    <h4>
-                                        {json_value.abstract}
-                                    </h4>
-                                </tr>
-                            </tr>
-                        ))}
-                    </tbody>
+                    <tr>
+                        <td>
+                            <a>Authors</a>
+                        </td>
+                    </tr>
+                    {json.map((json_value, index) => (
+                        <td >
+                            {
+                                json_value.authors_info.map((value) => (
+                                    <tr key={index}>
+                                        <th>
+                                            <a href={'http://localhost:3000/author_page/' + value.author_id}>{value.author_name}</a>
+                                        </th>
+                                    </tr>
+                                ))
+                            }
+                        </td>
+                    ))}
                 </Table>
+                <div>
+                    {json.map((json_value, index) => (
+                        <h3>
+                            doi:
+                            {json_value.doi}
+                        </h3>
+                    ))}
+                </div>
+                <div>
+                    {json.map((json_value, index) => (
+                        <h5>
+                            {json_value.abstract}
+                        </h5>
+                    ))}
+                </div>
             </div>
         );
     }

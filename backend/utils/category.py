@@ -13,8 +13,9 @@ def get_category(category,req):
     articles = req.get_articles_by_category(category)
     print(len(articles))
     articles_info = req.get_article_info(articles)
-    for article,article_info in zip(articles,articles_info):
-        answer.append({'article_name':article_info[0],'article_id':article})
+    author_names = req.get_article_authors_ids(articles)
+    for article,article_info,author in zip(articles,articles_info,author_names):
+        answer.append({'article_name':article_info[0],'article_id':article,'author_name':author[1],'author_id':author[0]})
     return answer
 
 class Category(Resource):

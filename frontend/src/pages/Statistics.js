@@ -1,6 +1,7 @@
 import React, {useState, useEffect, createRef} from "react";
 import '../App.css';
 import {Doughnut, Bar} from 'react-chartjs-2';
+import Spinner from 'react-bootstrap/Spinner'
 import Table from 'react-bootstrap/Table'
 
 export default function Statistics() {
@@ -26,18 +27,24 @@ export default function Statistics() {
                 }
             )
     }, [])
-    return (
-        <div>
-            <h2>10 people with higest article number</h2>
-            <Doughnut data={data}/>
+    if (error) {
+        return <div>Ошибка: {error.message}</div>;
+    } else if (!isLoaded) {
+        return <Spinner animation="border" />;
+    } else {
+        return (
+
             <div>
-                <Bar
-                    data={bar_data}
-                    width={600}
-                    height={400}
-                />
+                <h2>10 people with higest article number</h2>
+                <Doughnut data={data}/>
+                <div>
+                    <Bar
+                        data={bar_data}
+                        width={600}
+                        height={400}
+                    />
+                </div>
             </div>
-        </div>
-    )
-        ;
+        );
+    }
 }

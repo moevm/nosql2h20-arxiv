@@ -11,9 +11,18 @@ def get_article_page(article_page,req):
     if article_page == '':
         return [{}]
     article_info = req.get_article_info([int(article_page)])
+    author_info = req.get_article_authors_ids([int(article_page)])
+    author_id = [i[0] for i in author_info]
+    author_name = [i[1] for i in author_info]
+    print(author_name)
+    print(author_id)
     print(article_info)
+    authors = []
+    for name,id in zip(author_name,author_id):
+        authors.append({'author_name':name,'author_id':id})
     answer = [{
             'article_name':article_info[0][0],
+            'authors_info': authors,
             'doi':article_info[0][1],
             'category':article_info[0][2],
             'abstract':article_info[0][3]

@@ -47,7 +47,7 @@ export default function Co_author(props) {
                 <div>
                 {json.map((json_value, index) => (
                     <h2>
-                        Searched author:<a href={'http://localhost:3000/author/' + json_value.author_id}>{json_value.author_name}</a>
+                        Searched author:<a href={'http://localhost:3000/author_page/' + json_value.author_id}>{json_value.author_name}</a>
                     </h2>
                 ))}
                 </div>

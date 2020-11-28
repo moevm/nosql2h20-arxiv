@@ -23,7 +23,7 @@ def get_category_stat(req):
     return {
                  'labels': labels,
                  'datasets': [{
-                    'label':'Categories',
+                    'label':'Articles',
                      'data': stat_data,
                      'backgroundColor': color
                  }]

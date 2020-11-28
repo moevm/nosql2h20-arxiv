@@ -70,7 +70,7 @@ export default function Category() {
                     <tbody>
                         {json.map((json_value, index) => (
                             <tr key={index}>
-                                <th>Kek</th>
+                                <th><a href={'http://localhost:3000/author_page/'+json_value.author_id}>{json_value.author_name}</a></th>
                                 <th><a href={'http://localhost:3000/article_page/'+json_value.article_id}>{json_value.article_name}</a></th>
                             </tr>
                         ))}
