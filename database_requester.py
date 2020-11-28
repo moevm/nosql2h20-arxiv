@@ -71,6 +71,15 @@ class DatabaseRequester:
             res.sort(key=lambda x: -x[1])
             return res
 
+    def get_authors_statistics(self):
+        with self.driver.session() as session:
+            res = session.run("MATCH (a:Author)"
+                               " RETURN id(a), size((a)--()) as count"
+                               " ORDER BY count DESC"
+                               " LIMIT 10" 
+                               )
+            return res.values()
+
 
 
 if __name__ == "__main__":
@@ -97,6 +106,12 @@ if __name__ == "__main__":
 
     res = req.get_categories_statistics()
     print(res)
+    res = req.get_authors_statistics()
+    print(res)
+    ids = list(map(lambda x: x[0], res))
+    print(ids)
+    print(req.get_authors_names(ids))
+
     '''
     ids = req.get_articles_by_category("hep-ph")
     print(ids)
