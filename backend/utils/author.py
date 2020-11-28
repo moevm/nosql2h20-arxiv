@@ -8,6 +8,7 @@ parser.add_argument('author', location='args')
 def get_author(author,req):
     answer = []
     ids = req.get_authors_ids(author)
+    print(ids)
     if len(ids)==0:
         answer = [
         ]
@@ -22,8 +23,8 @@ def get_author(author,req):
         return answer
     info = req.get_article_info(article_ids)
     print(info)
-    for id, ar_names in zip(author_ids, info):
-        answer.append({'id': id, 'name': names[ids.index(id)], 'article': ar_names[0]})
+    for id,article_id, ar_names in zip(author_ids,article_ids, info):
+        answer.append({'id': id, 'name': names[ids.index(id)], 'article': ar_names[0],"article_id":article_id})
     return answer
 
 class Author(Resource):
