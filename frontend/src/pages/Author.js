@@ -77,8 +77,8 @@ export default function Author() {
                         {json.map((json_value, index) => (
                             <tr key={index}>
                                 <th>{json_value.id}</th>
-                                <th><a href={'http://localhost:3000/author_page/'+json_value.name}>{json_value.name}</a></th>
-                                <th><a href={'http://localhost:3000/article_page/'+json_value.article}>{json_value.article}</a></th>
+                                <th><a href={'http://localhost:3000/author_page/'+json_value.id}>{json_value.name}</a></th>
+                                <th><a href={'http://localhost:3000/article_page/'+json_value.article_id}>{json_value.article}</a></th>
                             </tr>
                         ))}
                     </tbody>
