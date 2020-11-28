@@ -40,6 +40,13 @@ class DatabaseRequester:
                               " WHERE id(a) in $author_ids"
                                " RETURN id(a), id(b)", author_ids=author_ids)
             return res.values()
+        
+    def get_article_authors_ids(self, article_ids):
+        with self.driver.session() as session:
+            res = session.run("MATCH (a:Author)-[:WROTE]-(b:Article)"
+                              " WHERE id(b) in $article_ids"
+                               " RETURN id(b), id(a), a.name", article_ids=article_ids)
+            return res.values()
     
     def get_article_info(self, article_ids):
         with self.driver.session() as session:
