@@ -34,24 +34,33 @@ class DatabaseRequester:
             return res.value()
 
         
-    def get_author_articles_ids(self, author_id):
+    def get_author_articles_ids(self, author_ids):
         with self.driver.session() as session:
             res = session.run("MATCH (a:Author)-[:WROTE]-(b:Article)"
-                              " WHERE id(a) = $author_id"
-                               " RETURN id(b)", author_id=author_id)
-            return res.value()
+                              " WHERE id(a) in $author_ids"
+                               " RETURN id(a),id(b)", author_ids=author_ids)
+            return res.values()
     
-    def get_article_info(self, article_id):
+    def get_article_info(self, article_ids):
         with self.driver.session() as session:
             res = session.run("MATCH (a:Article)"
-                              " WHERE id(a) = $article_id"
-                               " RETURN a.title, a.doi, a.categories, a.abstract", article_id=article_id)
+                              " WHERE id(a) in $article_ids"
+                               " RETURN a.title, a.doi, a.categories, a.abstract", article_ids=article_ids)
             return res.values()
+    
+    def get_articles_ids(self, reg_title):
+        with self.driver.session() as session:
+            res = session.run("MATCH (a:Article)"
+                              " WHERE a.title =~ $reg_title"
+                               " RETURN id(a) LIMIT 10", reg_title=reg_title)
+            return res.value()
+
+
 
 if __name__ == "__main__":
     req = DatabaseRequester("neo4j://localhost:7687", "neo4j", "password")
     ids = req.get_authors_ids("Xu*")
-    names = req.get_authors_names(ids)
+    '''names = req.get_authors_names(ids)
     print(names)
     ids = req.get_colleagues_of_author(ids[0])
     print(ids)
@@ -65,4 +74,8 @@ if __name__ == "__main__":
     print(ids)
     info = req.get_article_info(ids[0])
     print(info)
-
+    '''
+    ids = req.get_articles_ids("Sliding-Window QPS (SW-QPS): A Perfect Parallel Iterative Switching\\n  Algorithm for Input-Queued Switches")
+    print(ids)
+    info = req.get_article_info(ids)
+    print(info)
