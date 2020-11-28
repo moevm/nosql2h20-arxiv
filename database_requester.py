@@ -67,7 +67,9 @@ class DatabaseRequester:
             res = session.run("MATCH (a:Article)"
                                " UNWIND split(a.categories, ' ') AS cat"
                                " RETURN cat, count(a)")
-            return res.values()
+            res = res.values()
+            res.sort(key=lambda x: -x[1])
+            return res
 
 
 
@@ -93,7 +95,7 @@ if __name__ == "__main__":
     print(info)
     '''
 
-    res = req.get_categories_statistics1()
+    res = req.get_categories_statistics()
     print(res)
     '''
     ids = req.get_articles_by_category("hep-ph")
