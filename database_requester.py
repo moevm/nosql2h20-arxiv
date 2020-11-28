@@ -23,14 +23,14 @@ class DatabaseRequester:
         with self.driver.session() as session:
             res = session.run("MATCH (a:Author)-[:WROTE]-()-[:WROTE]-(b:Author)"
                               " WHERE id(a) = $author_id"
-                               " RETURN id(b)", author_id=author_id)
+                               " RETURN DISTINCT id(b)", author_id=author_id)
             return res.value()
 
     def get_related_to_author(self, author_id):
         with self.driver.session() as session:
             res = session.run("MATCH (a:Author)-[:WROTE*1..5]-(b:Author)"
                               " WHERE id(a) = $author_id"
-                               " RETURN id(b)", author_id=author_id)
+                               " RETURN DISTINCT id(b)", author_id=author_id)
             return res.value()
 
         
@@ -38,7 +38,7 @@ class DatabaseRequester:
         with self.driver.session() as session:
             res = session.run("MATCH (a:Author)-[:WROTE]-(b:Article)"
                               " WHERE id(a) in $author_ids"
-                               " RETURN id(a),id(b)", author_ids=author_ids)
+                               " RETURN id(a), id(b)", author_ids=author_ids)
             return res.values()
     
     def get_article_info(self, article_ids):
@@ -66,10 +66,10 @@ class DatabaseRequester:
         with self.driver.session() as session:
             res = session.run("MATCH (a:Article)"
                                " UNWIND split(a.categories, ' ') AS cat"
-                               " RETURN cat, count(a)")
-            res = res.values()
-            res.sort(key=lambda x: -x[1])
-            return res
+                               " RETURN cat, count(a) as count"
+                               " ORDER BY count DESC"
+                               )
+            return res.values()
 
     def get_authors_statistics(self):
         with self.driver.session() as session:
