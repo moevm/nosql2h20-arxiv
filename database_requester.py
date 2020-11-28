@@ -52,14 +52,14 @@ class DatabaseRequester:
         with self.driver.session() as session:
             res = session.run("MATCH (a:Article)"
                               " WHERE a.title =~ $reg_title"
-                               " RETURN id(a) LIMIT 10", reg_title=reg_title)
+                               " RETURN id(a)", reg_title=reg_title)
             return res.value()
 
     def get_articles_by_category(self, category):
         with self.driver.session() as session:
             res = session.run("MATCH (a:Article)"
                               " WHERE a.categories =~ $reg_category"
-                               " RETURN id(a) LIMIT 10", reg_category='.*'+category+'.*')
+                               " RETURN id(a)", reg_category='.*'+category+'.*')
             return res.value()
 
     def get_categories_statistics(self):
