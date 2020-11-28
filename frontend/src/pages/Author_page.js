@@ -1,8 +1,8 @@
 import React, {useState, useEffect, createRef} from "react";
-import {InputGroup, FormControl, Table,Button} from "react-bootstrap";
+import {InputGroup, FormControl, Table, Button} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import '../App.css';
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 export default function Author_page(props) {
     const [author_page, setAuthor] = useState('');
@@ -18,7 +18,7 @@ export default function Author_page(props) {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result," - result")
+                    console.log(result, " - result")
                     setJson(result);
                 },
                 (error) => {
@@ -43,7 +43,25 @@ export default function Author_page(props) {
         //console.log(json)
         return (
             <div>
-                <div><h1>{props.match.params.author_page}</h1></div>
+                <div>
+                    <Table >
+                        <th>
+                            {json.map((json_value, index) => (
+                                <h2>
+                                    {json_value.author_name}
+                                </h2>
+                            ))}
+                        </th>
+                        <th>
+                            {json.map((json_value, index) => (
+                                <Button variant="success" size='lg'
+                                        href={'http://localhost:3000/co_author/' + json_value.author_id}>
+                                    Go to coauthors
+                                </Button>
+                            ))}
+                        </th>
+                    </Table>
+                </div>
                 <Table>
                     <thead>
                         <tr>
@@ -54,22 +72,31 @@ export default function Author_page(props) {
                     </thead>
                     <tbody>
                         {json.map((json_value, index) => (
-                            <tr key={index}>
-                                <th><a href={'http://localhost:3000/article_page/'+json_value.article}>{json_value.article}</a></th>
+                            <tr>
+                                {
+                                    json_value.articles.map((value) => (
+                                        <tr key={index}>
+                                            <th>
+                                                <a href={'http://localhost:3000/article_page/' + value.article_id}>{value.article_name}</a>
+                                            </th>
+                                        </tr>
+                                    ))
+                                }
                             </tr>
                         ))}
                     </tbody>
                 </Table>
                 <Link to="/author">
-                    <Button size="lg">
+                    <Button size="sm">
                         Back to author search
                     </Button>
                 </Link>
                 <Link to="/article">
-                    <Button size="lg">
+                    <Button size="sm">
                         Back to article search
                     </Button>
                 </Link>
+
             </div>
         );
     }

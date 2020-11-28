@@ -29,7 +29,7 @@ export default function Co_author(props) {
     const columns = [
         {
             dataField: "name",
-            text: 'Author name'
+            text: 'Coauthor name'
         },
         {
             dataField: "article",
@@ -42,34 +42,28 @@ export default function Co_author(props) {
         return <div>Загрузка...</div>;
     } else {
         //console.log(author)
-        //console.log(json)
         return (
             <div>
                 <div>
-                    <h1>{props.match.params.co_author}</h1>
+                {json.map((json_value, index) => (
+                    <h2>
+                        Searched author:<a href={'http://localhost:3000/author/' + json_value.author_id}>{json_value.author_name}</a>
+                    </h2>
+                ))}
                 </div>
                 <Table>
-                    <thead>
+                    {json.map((json_value, index) => (
                         <tr>
-                            {columns.map((value, index) => (
-                                <th key={index}>{value.text}</th>
-                            ))}
+                            {
+                                json_value.co_authors.map((value) => (
+                                    <tr key={index}>
+                                        <th>
+                                            <a href={'http://localhost:3000/author_page/' + value.author_id}>{value.author_name}</a>
+                                        </th>
+                                    </tr>
+                                ))
+                            }
                         </tr>
-                    </thead>
-                    {json.map((json_value) => (
-                        <tbody>
-                            {json_value.co_authors.map((author) => (
-                                <tr>
-                                    <th>
-                                        {author.name}
-                                    </th>
-                                    <th>
-                                        {author.article_name}
-                                    </th>
-
-                                </tr>
-                            ))}
-                        </tbody>
                     ))}
                 </Table>
                 <Link to="/author">

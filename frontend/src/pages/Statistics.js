@@ -4,8 +4,8 @@ import {Doughnut, Bar} from 'react-chartjs-2';
 import Table from 'react-bootstrap/Table'
 
 export default function Statistics() {
-    const [data,setData] = useState([])
-    const [bar_data,setBarData] = useState([])
+    const [data, setData] = useState([])
+    const [bar_data, setBarData] = useState([])
     const [error, setError] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [result, setResult] = useState('');
@@ -16,7 +16,7 @@ export default function Statistics() {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result," - result")
+                    console.log(result, " - result")
                     setData(result[0]);
                     setBarData(result[1]);
                 },
@@ -28,21 +28,15 @@ export default function Statistics() {
     }, [])
     return (
         <div>
-            <Table striped bordered hover>
-                    <tr>
-                        <th>
-                            <Doughnut data={data}/>
-                        </th>
-                        <th>
-                            <Bar
-                                data={bar_data}
-                                width={600}
-                                height={400}
-
-                            />
-                        </th>
-                    </tr>
-            </Table>
+            <h2>10 people with higest article number</h2>
+            <Doughnut data={data}/>
+            <div>
+                <Bar
+                    data={bar_data}
+                    width={600}
+                    height={400}
+                />
+            </div>
         </div>
     )
         ;

@@ -31,8 +31,6 @@ export default function Category() {
                     setIsLoaded(true);
                     setJson(result);
                 },
-                // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-                // чтобы не перехватывать исключения из ошибок в самих компонентах.
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
@@ -41,10 +39,6 @@ export default function Category() {
     }, [category])
 
     const columns = [
-        {
-            dataField: "id",
-            text: 'Author id'
-        },
         {
             dataField: "name",
             text: 'Author name'
@@ -65,9 +59,6 @@ export default function Category() {
             <div>
                 <input ref={inform}/>
                 <button onClick={handleChange}>Search</button>
-                {json.map((json_value)=>(
-                    <h3>{json_value.category_name}</h3>
-                ))}
                 <Table>
                     <thead>
                         <tr>
@@ -79,9 +70,8 @@ export default function Category() {
                     <tbody>
                         {json.map((json_value, index) => (
                             <tr key={index}>
-                                <th>{json_value.id}</th>
-                                <th><a href={'http://localhost:3000/author_page/'+json_value.author_name}>{json_value.author_name}</a></th>
-                                <th><a href={'http://localhost:3000/article_page/'+json_value.article_name}>{json_value.article_name}</a></th>
+                                <th>Kek</th>
+                                <th><a href={'http://localhost:3000/article_page/'+json_value.article_id}>{json_value.article_name}</a></th>
                             </tr>
                         ))}
                     </tbody>
