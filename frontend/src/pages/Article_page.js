@@ -24,7 +24,7 @@ export default function Article_page(props) {
 
     useEffect(() => {
         //console.log('fetch',author)
-        fetch(`http://localhost:5000/article_page?article_page=${props.match.params.author_page}`)
+        fetch(`http://localhost:5000/article_page?article_page=${props.match.params.article_page}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -56,7 +56,9 @@ export default function Article_page(props) {
         return (
             <div>
                 <div>
-                    <h3>{props.match.params.article_page}</h3>
+                    {json.map((value, index) => (
+                        <th key={index}>{value.article_name}</th>
+                    ))}
                 </div>
                 <Table>
                     <thead>
@@ -72,7 +74,7 @@ export default function Article_page(props) {
                                 <tr>
                                     <th>
                                         <h4>
-                                            <a href={'http://localhost:3000/author_page/' + json_value.author_name}>
+                                            <a href={'http://localhost:3000/author_page/' + json_value.id}>
                                                 {json_value.author_name}
                                             </a>
                                         </h4>
