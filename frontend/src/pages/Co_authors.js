@@ -3,6 +3,7 @@ import {InputGroup, FormControl, Table, Button} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import '../App.css';
 import {Link} from 'react-router-dom'
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Co_author(props) {
     const [co_author, setAuthor] = useState('');
@@ -39,7 +40,7 @@ export default function Co_author(props) {
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Загрузка...</div>;
+        return <Spinner animation="grow" />;
     } else {
         //console.log(author)
         return (
@@ -51,7 +52,7 @@ export default function Co_author(props) {
                     </h2>
                 ))}
                 </div>
-                <Table>
+                <Table variant="dark">
                     {json.map((json_value, index) => (
                         <tr>
                             {

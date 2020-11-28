@@ -1,6 +1,7 @@
 import React, {useState, useEffect, createRef} from "react";
 import {InputGroup, FormControl, Table} from "react-bootstrap";
 import '../App.css';
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Article() {
     const [article, setArticle] = useState('');
@@ -53,7 +54,7 @@ export default function Article() {
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Загрузка...</div>;
+        return <Spinner animation="grow" />;
     } else {
         //console.log(author)
         //console.log(json)
@@ -61,7 +62,7 @@ export default function Article() {
             <div>
                 <input ref={inform}/>
                 <button onClick={handleChange}>Search</button>
-                <Table>
+                <Table variant="dark">
                     <thead>
                         <tr>
                             {columns.map((value, index) => (
@@ -71,9 +72,15 @@ export default function Article() {
                     </thead>
                     <tbody>
                         {json.map((json_value, index) => (
-                            <tr key={index}>
-                                <th><a href={'http://localhost:3000/article_page/'+json_value.article_id}>{json_value.article_name}</a></th>
-                                <th><a href={'http://localhost:3000/author_page/'+json_value.author_id}>{json_value.author_name}</a></th>
+                            <tr>
+                                <th>
+                                    <a href={'http://localhost:3000/article_page/' + json_value.article_id}>{json_value.article_name}</a>
+                                </th>
+                                {json_value.author_info.map((value) => (
+                                    <th>
+                                        <a href={'http://localhost:3000/author_page/' + value.author_id}>{value.author_name}</a>
+                                    </th>
+                                ))}
                             </tr>
                         ))}
                     </tbody>

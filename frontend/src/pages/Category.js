@@ -1,6 +1,7 @@
 import React, {useState, useEffect, createRef} from "react";
 import {InputGroup, FormControl, Table} from "react-bootstrap";
 import '../App.css';
+import Spinner from "react-bootstrap/Spinner";
 
 export default function Category() {
     const [category, setCategory] = useState('');
@@ -51,7 +52,7 @@ export default function Category() {
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Загрузка...</div>;
+        return <Spinner animation="grow" />;
     } else {
         //console.log(author)
         //console.log(json)
@@ -59,7 +60,7 @@ export default function Category() {
             <div>
                 <input ref={inform}/>
                 <button onClick={handleChange}>Search</button>
-                <Table>
+                <Table variant="dark">
                     <thead>
                         <tr>
                             {columns.map((value, index) => (

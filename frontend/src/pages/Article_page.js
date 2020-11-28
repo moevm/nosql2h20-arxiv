@@ -1,6 +1,7 @@
 import React, {useState, useEffect, createRef} from "react";
 import {InputGroup, FormControl, Table} from "react-bootstrap";
 import '../App.css';
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Article_page(props) {
     const [article_page, setArticlePage] = useState('');
@@ -60,7 +61,7 @@ export default function Article_page(props) {
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Загрузка...</div>;
+        return <Spinner animation="grow" />;
     } else {
         //console.log(author)
         //console.log(json)
@@ -72,7 +73,7 @@ export default function Article_page(props) {
                     ))}
                 </h2>
 
-                <Table>
+                <Table variant="dark">
                     <tr>
                         <td>
                             <a>Authors</a>

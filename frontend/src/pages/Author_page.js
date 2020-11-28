@@ -3,6 +3,7 @@ import {InputGroup, FormControl, Table, Button} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import '../App.css';
 import {Link} from 'react-router-dom'
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Author_page(props) {
     const [author_page, setAuthor] = useState('');
@@ -37,14 +38,14 @@ export default function Author_page(props) {
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Загрузка...</div>;
+        return <Spinner animation="grow" />;
     } else {
         //console.log(author)
         //console.log(json)
         return (
             <div>
                 <div>
-                    <Table >
+                    <Table variant="dark">
                         <th>
                             {json.map((json_value, index) => (
                                 <h2>
@@ -62,7 +63,7 @@ export default function Author_page(props) {
                         </th>
                     </Table>
                 </div>
-                <Table>
+                <Table variant="dark">
                     <thead>
                         <tr>
                             {columns.map((value, index) => (

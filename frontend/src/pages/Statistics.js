@@ -30,7 +30,7 @@ export default function Statistics() {
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
-        return <Spinner animation="border" />;
+        return <Spinner animation="grow" />;
     } else {
         return (
 

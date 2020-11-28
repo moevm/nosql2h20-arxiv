@@ -1,6 +1,7 @@
 import React, {useState, useEffect, createRef} from "react";
 import {InputGroup, FormControl, Table} from "react-bootstrap";
 import '../App.css';
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Author() {
     const [author, setAuthor] = useState('');
@@ -53,7 +54,7 @@ export default function Author() {
     if (error) {
         return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Загрузка...</div>;
+        return <Spinner animation="grow" />;
     } else {
         //console.log(author)
         //console.log(json)
@@ -61,7 +62,7 @@ export default function Author() {
             <div>
                 <input ref={inform}/>
                 <button onClick={handleChange}>Search</button>
-                <Table>
+                <Table variant="dark">
                     <thead>
                         <tr>
                             {columns.map((value, index) => (
