@@ -5,6 +5,8 @@ services:
         build:
           context: ./backend
         container_name: arxiv_backend
+        depends_on:
+            - neo4j
         ports:
             - "5000:5000"
         environment:
@@ -18,4 +20,10 @@ services:
         network_mode: "host"
         build:
           context: ./db
+        environment:
+          NEO4J_AUTH: neo4j/password
         container_name: arxiv_neo4j
+        restart: always
+        ports:
+            - "7474:7474"
+            - "7687:7687"
