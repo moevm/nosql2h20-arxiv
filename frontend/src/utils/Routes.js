@@ -12,7 +12,7 @@ import Statistics from "../pages/Statistics";
 export default function Routes() {
     return (
         <Switch>
-            <Route exact path="/" component={Home}/>
+s
             <Route path="/statistics" component={Statistics}/>
             <Route path="/article" component={Article}/>
             <Route path="/category" component={Category}/>
