@@ -9,7 +9,7 @@ class DatabaseRequester:
         with self.driver.session() as session:
             res = session.run("MATCH (a:Author)"
                               " WHERE a.name =~ $reg_name"
-                               " RETURN id(a) LIMIT 50", reg_name=reg_name)
+                               " RETURN id(a) LIMIT 50", reg_name='.*'+reg_name+'.*')
             return res.value()
 
     def get_authors_names(self, ids):
@@ -59,7 +59,7 @@ class DatabaseRequester:
         with self.driver.session() as session:
             res = session.run("MATCH (a:Article)"
                               " WHERE a.title =~ $reg_title"
-                               " RETURN id(a) LIMIT 50", reg_title=reg_title)
+                               " RETURN id(a) LIMIT 50", reg_title='.*'+reg_title+'.*')
             return res.value()
 
     def get_articles_by_category(self, category):
