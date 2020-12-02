@@ -85,7 +85,7 @@ export default function Article_page(props) {
                                 json_value.authors_info.map((value) => (
                                     <tr key={index}>
                                         <th>
-                                            <a href={'http://localhost:3000/author_page/' + value.author_id}>{value.author_name}</a>
+                                            <a href={'http://localhost:80/author_page/' + value.author_id}>{value.author_name}</a>
                                         </th>
                                     </tr>
                                 ))

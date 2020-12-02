@@ -56,7 +56,7 @@ export default function Author_page(props) {
                         <th>
                             {json.map((json_value, index) => (
                                 <Button variant="success" size='lg'
-                                        href={'http://localhost:3000/co_author/' + json_value.author_id}>
+                                        href={'http://localhost:80/co_author/' + json_value.author_id}>
                                     Go to coauthors
                                 </Button>
                             ))}
@@ -78,7 +78,7 @@ export default function Author_page(props) {
                                     json_value.articles.map((value) => (
                                         <tr key={index}>
                                             <th>
-                                                <a href={'http://localhost:3000/article_page/' + value.article_id}>{value.article_name}</a>
+                                                <a href={'http://localhost:80/article_page/' + value.article_id}>{value.article_name}</a>
                                             </th>
                                         </tr>
                                     ))
