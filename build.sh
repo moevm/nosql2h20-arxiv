@@ -1,6 +1,6 @@
 #!/bin/bash
 #sudo docker-compose down --remove-orphans
-if [[ -f db/arxiv.tar.gz ]]
+if [[ -f arxiv.tar.gz ]]
 then
     echo 'dataset is already downloaded'
 else
