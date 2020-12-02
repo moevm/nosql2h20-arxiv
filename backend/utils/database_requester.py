@@ -87,39 +87,22 @@ class DatabaseRequester:
                                )
             return res.values()
 
+    def export_database(self):
+        with self.driver.session() as session:
+            authors_query = """WITH \"MATCH (a:Author)
+             RETURN a.name as `name:ID` \" AS query"""
+            articles_query = """WITH \"MATCH (a:Article)
+             RETURN id(a) as `:ID`, a.title as title, a.doi as doi, 
+             a.categories as categories, a.abstract as abstract \" AS query"""
+            wrote_query = """WITH \"MATCH (a:Author)-[:WROTE]-(b:Article)
+             RETURN a.name as `:START_ID`, id(b) as `:END_ID` \" AS query"""
+            end_of_query = """ CALL apoc.export.csv.query(query, $file, {})
+             YIELD file, source, format, nodes
+             RETURN file, source, format, nodes"""
+            session.run(authors_query + end_of_query, file="authors.csv")
+            session.run(articles_query + end_of_query, file="articles.csv")
+            session.run(wrote_query + end_of_query, file="wrote.csv")
 
 
 if __name__ == "__main__":
     req = DatabaseRequester("neo4j://localhost:7687", "neo4j", "password")
-    ids = req.get_authors_ids("Xu*")
-    print(ids)
-    res = req.get_authors_names(ids)
-    print(res)
-    '''names = req.get_authors_names(ids)
-    print(names)
-    ids = req.get_colleagues_of_author(ids[0])
-    print(ids)
-    names = req.get_authors_names(ids)
-    print(names)
-    ids = req.get_related_to_author(ids[0])
-    print(ids)
-    ids = req.get_author_articles_ids(ids[0])
-    print(ids)
-    info = req.get_article_info(ids[0])
-    print(info)
-    '''
-
-    res = req.get_categories_statistics()
-    print(res)
-    res = req.get_authors_statistics()
-    print(res)
-    ids = list(map(lambda x: x[0], res))
-    print(ids)
-    print(req.get_authors_names(ids))
-
-    '''
-    ids = req.get_articles_by_category("hep-ph")
-    print(ids)
-    info = req.get_article_info(ids)
-    print(info)
-    '''
