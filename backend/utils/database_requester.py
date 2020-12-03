@@ -1,3 +1,4 @@
+import pandas as pd
 from neo4j import GraphDatabase
 
 class DatabaseRequester:
@@ -89,20 +90,34 @@ class DatabaseRequester:
 
     def export_database(self):
         with self.driver.session() as session:
-            authors_query = """WITH \"MATCH (a:Author)
-             RETURN a.name as `name:ID` \" AS query"""
-            articles_query = """WITH \"MATCH (a:Article)
-             RETURN id(a) as `:ID`, a.title as title, a.doi as doi, 
-             a.categories as categories, a.abstract as abstract \" AS query"""
-            wrote_query = """WITH \"MATCH (a:Author)-[:WROTE]-(b:Article)
-             RETURN a.name as `:START_ID`, id(b) as `:END_ID` \" AS query"""
-            end_of_query = """ CALL apoc.export.csv.query(query, $file, {})
-             YIELD file, source, format, nodes
-             RETURN file, source, format, nodes"""
-            session.run(authors_query + end_of_query, file="authors.csv")
-            session.run(articles_query + end_of_query, file="articles.csv")
-            session.run(wrote_query + end_of_query, file="wrote.csv")
+            authors_query = """MATCH (a:Author)
+                               RETURN a.name """
+            articles_query = """MATCH (a:Article)
+                                RETURN id(a), a.title, a.doi, a.categories, a.abstract"""
+            wrote_query = """MATCH (a:Author)-[:WROTE]-(b:Article)
+                             RETURN a.name, id(b)"""
+            res = session.run(authors_query)
+            df = pd.DataFrame(res, columns=['name:ID'])
+            df.to_csv("authors.csv")
+
+            del res
+            del df
+            
+            res = session.run(articles_query)
+            df = pd.DataFrame(res, columns=[':ID', 'title', 'doi', 'categories', 'abstract'])
+            df.to_csv("articles.csv")
+
+            del res
+            del df
+
+            res = session.run(wrote_query)
+            df = pd.DataFrame(res, columns=[':START_ID', ':END_ID'])
+            df.to_csv("wrote.csv")
+            del res
+            del df
+
 
 
 if __name__ == "__main__":
     req = DatabaseRequester("neo4j://localhost:7687", "neo4j", "password")
+    req.export_database()
