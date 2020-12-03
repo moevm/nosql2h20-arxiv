@@ -10,12 +10,12 @@ import Home from "../pages/Home";
 export default function MainNavbar() {
     return (
         <Navbar bg="dark" variant="dark">
-            <Navbar.Brand as={Link} to="/">
+            <Navbar.Brand as={Link} to="/home">
                 <i>Arxiv</i>
             </Navbar.Brand>
-            <Nav defaultActiveKey="/">
+            <Nav defaultActiveKey="/home">
                 <Nav.Item>
-                    <Nav.Link as={Link} to="/">Home</Nav.Link>
+                    <Nav.Link as={Link} to="/home">Home</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link as={Link} to="/statistics">Statistics</Nav.Link>

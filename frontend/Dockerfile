@@ -4,7 +4,7 @@ WORKDIR /app
 RUN mkdir frontend
 COPY package.json ./frontend/
 COPY package-lock.json ./frontend/
-RUN cd frontend && npm install --only=prod && npm install --save chart.js
+RUN cd frontend && npm install --only=prod
 COPY . ./frontend
 RUN cd frontend && npm install && npm run build
 
