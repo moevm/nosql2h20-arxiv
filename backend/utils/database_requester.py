@@ -1,5 +1,7 @@
 import pandas as pd
+from zipfile import ZipFile, ZIP_BZIP2
 from neo4j import GraphDatabase
+
 
 class DatabaseRequester:
 
@@ -115,9 +117,33 @@ class DatabaseRequester:
             df.to_csv("wrote.csv")
             del res
             del df
-
+        with ZipFile('export.zip', mode='w', compression=ZIP_BZIP2, compresslevel=9) as zf:
+            zf.write("authors.csv")
+            zf.write("articles.csv")
+            zf.write("wrote.csv")
+    
+    def import_database(self):
+        with self.driver.session() as session:
+            author_query = """UNWIND $names as name
+                              MERGE (a:Author{name:name})"""
+            articles_query = """UNWIND $articles as article
+                              MERGE (a:Article{title:article[1]})
+                              SET a.doi=article[2],
+                              a.catergories=article[3], a.abstract=article[4],
+                              a.id = article[0]"""
+            wrote_query = """UNWIND $wrote as wrote
+                             MATCH (a:Author{name:wrote[0]}), (b:Article{id:wrote[1]})
+                             MERGE (a)-[:WROTE]-(b)
+                             REMOVE b.id"""
+            names = pd.read_csv("authors.csv", index_col=False)
+            session.run(author_query, names=names['name:ID'].values.tolist())
+            articles = pd.read_csv("articles.csv", index_col=False)
+            session.run(articles_query, articles=articles.values.tolist())
+            wrote = pd.read_csv("wrote.csv", index_col=False)
+            session.run(wrote_query, wrote=wrote.values.tolist())
 
 
 if __name__ == "__main__":
     req = DatabaseRequester("neo4j://localhost:7687", "neo4j", "password")
-    req.export_database()
+    #req.export_database()
+    req.import_database()
