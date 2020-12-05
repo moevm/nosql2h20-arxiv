@@ -17,6 +17,7 @@ then
     sudo rm -r /var/lib/neo4j/data/transactions/neo4j
 fi
 
+sudo neo4j stop
 bash db/importing.sh
 sudo neo4j start
 
