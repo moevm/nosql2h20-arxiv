@@ -15,7 +15,10 @@ class Home(Resource):
         req = DatabaseRequester("bolt://localhost:7687", "neo4j", "password")
         print('import')
         print(request.files)
-        filename = list(request.files)[0]
+        try:
+            filename = list(request.files)[0]
+        except IndexError:
+            return make_response( jsonify({'status': 'error'}),505)
         file = request.files[filename]
         data = file.read()
         print('fileName - ' + filename)
@@ -24,4 +27,4 @@ class Home(Resource):
         if res is None:
             return make_response( jsonify({'status': 'ok'}), 201)
         else:
-            return make_response( jsonify({'status': 'bad_file'}), 500)
+            return make_response( jsonify({'status': 'error'}),505)
