@@ -132,7 +132,7 @@ class DatabaseRequester:
             articles_query = """UNWIND $articles as article
                               MERGE (a:Article{title:article[1]})
                               SET a.doi=article[2],
-                              a.catergories=article[3], a.abstract=article[4],
+                              a.categories=article[3], a.abstract=article[4],
                               a.id = article[0]"""
             wrote_query = """UNWIND $wrote as wrote
                              MATCH (a:Author{name:wrote[0]}), (b:Article{id:wrote[1]})
