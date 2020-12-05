@@ -30,9 +30,11 @@ export default function Home() {
             if ("error" in res.data) {
                 alert(res.data["error"])
                 setIsLoading(false);
+		setLoadedmsg("Import fail");
             } else {
                 console.log(res.status);
                 setIsLoading(false);
+		setLoadedmsg("Imported");
             }
 
         });
