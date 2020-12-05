@@ -9,7 +9,6 @@ else
 fi
 if [[ -d /var/lib/neo4j/data/databases/neo4j ]]
 then
-    echo 'AAAAAAAAAAAA'
     sudo rm -r /var/lib/neo4j/data/databases/neo4j
 fi
 if [[ -d /var/lib/neo4j/data/transactions/neo4j ]]
