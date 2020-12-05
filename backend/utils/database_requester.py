@@ -93,11 +93,14 @@ class DatabaseRequester:
     def export_database(self):
         with self.driver.session() as session:
             authors_query = """MATCH (a:Author)
-                               RETURN a.name """
+                               RETURN a.name
+                               LIMIT 50"""
             articles_query = """MATCH (a:Article)
-                                RETURN id(a), a.title, a.doi, a.categories, a.abstract"""
+                                RETURN id(a), a.title, a.doi, a.categories, a.abstract
+                                LIMIT 50"""
             wrote_query = """MATCH (a:Author)-[:WROTE]-(b:Article)
-                             RETURN a.name, id(b)"""
+                             RETURN a.name, id(b)
+                             LIMIT 50"""
             res = session.run(authors_query)
             df = pd.DataFrame(res, columns=['name:ID'])
             df.to_csv("authors.csv")
@@ -122,7 +125,7 @@ class DatabaseRequester:
             zf.write("articles.csv")
             zf.write("wrote.csv")
     
-    def import_database(self):
+    def import_database(self, archive):
         with self.driver.session() as session:
             author_query = """UNWIND $names as name
                               MERGE (a:Author{name:name})"""
@@ -135,15 +138,20 @@ class DatabaseRequester:
                              MATCH (a:Author{name:wrote[0]}), (b:Article{id:wrote[1]})
                              MERGE (a)-[:WROTE]-(b)
                              REMOVE b.id"""
-            names = pd.read_csv("authors.csv", index_col=False)
-            session.run(author_query, names=names['name:ID'].values.tolist())
-            articles = pd.read_csv("articles.csv", index_col=False)
-            session.run(articles_query, articles=articles.values.tolist())
-            wrote = pd.read_csv("wrote.csv", index_col=False)
-            session.run(wrote_query, wrote=wrote.values.tolist())
+            with ZipFile(archive, mode='r') as zf:
+                with zf.open("authors.csv") as f:
+                    names = pd.read_csv(f, index_col=False)
+                    session.run(author_query, names=names['name:ID'].values.tolist())
+                with zf.open("articles.csv") as f:
+                    articles = pd.read_csv(f, index_col=False)
+                    columns = [":ID", "title", "doi", "categories", "abstract"]
+                    session.run(articles_query, articles=articles[columns].values.tolist())
+                with zf.open("wrote.csv") as f:
+                    wrote = pd.read_csv(f, index_col=False)
+                    session.run(wrote_query, wrote=wrote[[":START_ID", ":END_ID"]].values.tolist())
 
 
 if __name__ == "__main__":
     req = DatabaseRequester("neo4j://localhost:7687", "neo4j", "password")
     #req.export_database()
-    req.import_database()
+    req.import_database("import.zip")
