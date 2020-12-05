@@ -18,7 +18,8 @@ def get_article_page(article_page,req):
     print(author_id)
     print(article_info)
     authors = []
-    if article_info[0][1] == 'nan':
+    print(type(article_info[0][1]))
+    if type(article_info[0][1]) != str:
         article_info[0][1] = ' '
     for name,id in zip(author_name,author_id):
         authors.append({'author_name':name,'author_id':id})
