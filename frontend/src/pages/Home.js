@@ -3,27 +3,22 @@ import {Dropdown,Form, FormControl, Table, Spinner, Button} from "react-bootstra
 import '../App.css';
 import axios from 'axios';
 
-const AUTHOR = "author"
-const ARTICLE = "article"
-const WROTE = "wrote"
-
 
 export default function Home() {
     const [zipfile, setZipfile] = useState("");
-    const [typeNode, setTypenode] = useState(ARTICLE)
     const [isLoading, setIsLoading] = useState(false);
-
+    const [Loadedmsg,setLoadedmsg] = useState("");
     const onFileChange = event => {
         setZipfile(event.target.files[0]);
+	setLoadedmsg("Loaded");
 
     };
     console.log(zipfile)
     const onFileUpload = () => {
         const formData = new FormData();
         formData.append(
-            typeNode,
-            zipfile,
-            zipfile.name
+            zipfile.name,
+            zipfile
         );
         console.log(formData)
         setIsLoading(true);
@@ -46,17 +41,6 @@ export default function Home() {
 
     return (
         <div>
-            <Dropdown>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                    {typeNode}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => setTypenode(AUTHOR)}>{AUTHOR}</Dropdown.Item>
-                    <Dropdown.Item onClick={() => setTypenode(ARTICLE)}>{ARTICLE}</Dropdown.Item>
-                    <Dropdown.Item onClick={() => setTypenode(WROTE)}>{WROTE}</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
             <FormControl
                 type="file"
                 onChange={onFileChange}/>
@@ -64,10 +48,11 @@ export default function Home() {
             <Button variant={"success"} onClick={onFileUpload}>
                 Import
             </Button>
-
-
+            <div>
+            {isLoading ?  <Spinner animation="grow" /> : <h2>{Loadedmsg}</h2>}
+            </div>
             <h2>Export</h2>
-            <a href={"/home"} target="_blank" rel="noopener noreferrer" download>
+            <a href={"http://localhost:80/api/home"} target="_blank" rel="noopener noreferrer" download>
                 <Button>
                     <i className="fas fa-download"/>
                     Download File
