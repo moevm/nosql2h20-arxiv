@@ -47,6 +47,10 @@ export default function Category() {
         {
             dataField: "article",
             text: 'Article name'
+        },
+        {
+            dataField: "category",
+            text: 'Category name'
         }
     ];
     if (error) {
@@ -71,8 +75,9 @@ export default function Category() {
                     <tbody>
                         {json.map((json_value, index) => (
                             <tr key={index}>
-                                <th><a href={'http://localhost:80/author_page/'+json_value.author_id}>{json_value.author_name}</a></th>
-                                <th><a href={'http://localhost:80/article_page/'+json_value.article_id}>{json_value.article_name}</a></th>
+                                <th><a href={'/author_page/'+json_value.author_id}>{json_value.author_name}</a></th>
+                                <th><a href={'/article_page/'+json_value.article_id}>{json_value.article_name}</a></th>
+                                <th>{json_value.category}</th>
                             </tr>
                         ))}
                     </tbody>

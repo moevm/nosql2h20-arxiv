@@ -24,7 +24,7 @@ def get_author(author,req):
     info = req.get_article_info(article_ids)
     print(info)
     for id,article_id, ar_names in zip(author_ids,article_ids, info):
-        answer.append({'id': id, 'name': names[ids.index(id)], 'article': ar_names[0],"article_id":article_id})
+        answer.append({'id': id, 'name': names[ids.index(id)], 'article': ar_names[0],"article_id":article_id,"category":ar_names[2]})
     return answer
 
 class Author(Resource):

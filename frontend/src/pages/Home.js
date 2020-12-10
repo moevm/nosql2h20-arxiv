@@ -54,7 +54,7 @@ export default function Home() {
             {isLoading ?  <Spinner animation="grow" /> : <h2>{Loadedmsg}</h2>}
             </div>
             <h2>Export</h2>
-            <a href={"http://localhost:80/api/home"} target="_blank" rel="noopener noreferrer" download>
+            <a href={"/api/home"} target="_blank" rel="noopener noreferrer" download>
                 <Button>
                     <i className="fas fa-download"/>
                     Download File

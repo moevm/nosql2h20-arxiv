@@ -49,6 +49,10 @@ export default function Author() {
         {
             dataField: "article",
             text: 'Article name'
+        },
+        {
+            dataField: "category",
+            text: 'Category name'
         }
     ];
     if (error) {
@@ -75,6 +79,7 @@ export default function Author() {
                             <tr key={index}>
                                 <th><a href={'http://localhost:80/author_page/'+json_value.id}>{json_value.name}</a></th>
                                 <th><a href={'http://localhost:80/article_page/'+json_value.article_id}>{json_value.article}</a></th>
+                                <th>{json_value.category}</th>
                             </tr>
                         ))}
                     </tbody>
