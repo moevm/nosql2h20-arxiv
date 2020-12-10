@@ -74,11 +74,11 @@ export default function Article() {
                         {json.map((json_value, index) => (
                             <tr>
                                 <th>
-                                    <a href={'http://localhost:80/article_page/' + json_value.article_id}>{json_value.article_name}</a>
+                                    <a href={'/article_page/' + json_value.article_id}>{json_value.article_name}</a>
                                 </th>
                                 {json_value.author_info.map((value) => (
                                     <th>
-                                        <a href={'http://localhost:80/author_page/' + value.author_id}>{value.author_name}</a>
+                                        <a href={'/author_page/' + value.author_id}>{value.author_name}</a>
                                     </th>
                                 ))}
                             </tr>
