@@ -11,4 +11,5 @@ RUN cd frontend && npm install && npm run build
 FROM nginx:1.16.0-alpine
 COPY --from=build /app/frontend/build /usr/share/nginx/html
 COPY --from=build /app/frontend/nginx/default.conf /etc/nginx/conf.d/default.conf
+EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]

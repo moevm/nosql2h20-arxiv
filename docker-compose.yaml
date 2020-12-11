@@ -1,29 +1,23 @@
 version: '3.3'
 services:
     backend:
-        network_mode: "host"
         build:
           context: ./backend
         container_name: arxiv_backend
-        #ports:
-        #    - "5000:5000"
         environment:
             - PYTHONUNBUFFERED=1
         depends_on:
             - neo4j
     frontend:
-        network_mode: "host"
         build:
           context: ./frontend
         ports:
-            - "7000:5000"
+            - "3000:3000" 
         container_name: arxiv_frontend
+        depends_on:
+            - backend
     neo4j:
         image: neo4j:4.2.0
-        network_mode: "host"
         container_name: arxiv_neo4j
-        ports:
-            - "7474:7474"
-            - "7687:7687"
         environment:
             NEO4J_AUTH: neo4j/password

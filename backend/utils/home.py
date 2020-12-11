@@ -5,14 +5,14 @@ from .database_requester import DatabaseRequester
 class Home(Resource):
     def get(self):
         print('export')
-        req = DatabaseRequester("bolt://localhost:7687", "neo4j", "password")
+        req = DatabaseRequester("bolt://arxiv_neo4j:7687", "neo4j", "password")
         print('kek')
         req.export_database()
         return send_file('export.zip', as_attachment=True)
 
 
     def post(self):
-        req = DatabaseRequester("bolt://localhost:7687", "neo4j", "password")
+        req = DatabaseRequester("bolt://arxiv_neo4j:7687", "neo4j", "password")
         print('import')
         print(request.files)
         try:

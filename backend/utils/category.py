@@ -21,7 +21,7 @@ def get_category(category,req):
 class Category(Resource):
 
     def get(self):
-        req = DatabaseRequester("bolt://localhost:7687", "neo4j", "password")
+        req = DatabaseRequester("bolt://arxiv_neo4j:7687", "neo4j", "password")
         args = parser.parse_args()
         print(args)
         category = args.get('category')
