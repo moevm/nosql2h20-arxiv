@@ -13,7 +13,7 @@ export default function Co_author(props) {
     const [json, setJson] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/co_author?co_author=${props.match.params.co_author}`)
+        fetch(`http://localhost:3000/api/co_author?co_author=${props.match.params.co_author}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -48,7 +48,7 @@ export default function Co_author(props) {
                 <div>
                 {json.map((json_value, index) => (
                     <h2>
-                        Searched author:<a href={'/author_page/' + json_value.author_id}>{json_value.author_name}</a>
+                        Searched author:<a href={'http://localhost:3000/api/author_page/' + json_value.author_id}>{json_value.author_name}</a>
                     </h2>
                 ))}
                 </div>
@@ -59,7 +59,7 @@ export default function Co_author(props) {
                                 json_value.co_authors.map((value) => (
                                     <tr key={index}>
                                         <th>
-                                            <a href={'/author_page/' + value.author_id}>{value.author_name}</a>
+                                            <a href={'http://localhost:3000/author_page/' + value.author_id}>{value.author_name}</a>
                                         </th>
                                     </tr>
                                 ))

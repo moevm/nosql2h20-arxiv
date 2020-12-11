@@ -53,7 +53,7 @@ def get_get_authors_stat(req):
              }
 class Stat(Resource):
     def get(self):
-        req = DatabaseRequester("bolt://localhost:7687", "neo4j", "password")
+        req = DatabaseRequester("bolt://arxiv_neo4j:7687", "neo4j", "password")
         bar_data = get_category_stat(req)
         data = get_get_authors_stat(req)
         return make_response(

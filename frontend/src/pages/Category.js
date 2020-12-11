@@ -25,7 +25,7 @@ export default function Category() {
 
     useEffect(() => {
         //console.log('fetch',author)
-        fetch(`http://localhost:5000/category?category=${category}`)
+        fetch(`api/category?category=${category}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -75,8 +75,8 @@ export default function Category() {
                     <tbody>
                         {json.map((json_value, index) => (
                             <tr key={index}>
-                                <th><a href={'/author_page/'+json_value.author_id}>{json_value.author_name}</a></th>
-                                <th><a href={'/article_page/'+json_value.article_id}>{json_value.article_name}</a></th>
+                                <th><a href={'http://localhost:3000/author_page/'+json_value.author_id}>{json_value.author_name}</a></th>
+                                <th><a href={'http://localhost:3000/article_page/'+json_value.article_id}>{json_value.article_name}</a></th>
                                 <th>{json_value.category}</th>
                             </tr>
                         ))}

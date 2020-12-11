@@ -25,7 +25,7 @@ export default function Article_page(props) {
 
     useEffect(() => {
         //console.log('fetch',author)
-        fetch(`http://localhost:5000/article_page?article_page=${props.match.params.article_page}`)
+        fetch(`http://localhost:3000/api/article_page?article_page=${props.match.params.article_page}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -85,7 +85,7 @@ export default function Article_page(props) {
                                 json_value.authors_info.map((value) => (
                                     <tr key={index}>
                                         <th>
-                                            <a href={'/author_page/' + value.author_id}>{value.author_name}</a>
+                                            <a href={'http://localhost:3000/author_page/' + value.author_id}>{value.author_name}</a>
                                         </th>
                                     </tr>
                                 ))

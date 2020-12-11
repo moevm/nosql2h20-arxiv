@@ -12,7 +12,7 @@ export default function Statistics() {
     const [result, setResult] = useState('');
     const [json, setJson] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/statistics`)
+        fetch(`api/statistics`)
             .then(res => res.json())
             .then(
                 (result) => {

@@ -14,7 +14,7 @@ export default function Author_page(props) {
 
     useEffect(() => {
         console.log(props)
-        fetch(`http://localhost:5000/author_page?author_page=${props.match.params.author_page}`)
+        fetch(`http://localhost:3000/api/author_page?author_page=${props.match.params.author_page}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -56,7 +56,7 @@ export default function Author_page(props) {
                         <th>
                             {json.map((json_value, index) => (
                                 <Button variant="success" size='lg'
-                                        href={'/co_author/' + json_value.author_id}>
+                                        href={'http://localhost:3000/co_author/' + json_value.author_id}>
                                     Go to coauthors
                                 </Button>
                             ))}

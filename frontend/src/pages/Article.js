@@ -25,7 +25,7 @@ export default function Article() {
 
     useEffect(() => {
         //console.log('fetch',author)
-        fetch(`http://localhost:5000/article?article=${article}`)
+        fetch(`api/article?article=${article}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -74,11 +74,11 @@ export default function Article() {
                         {json.map((json_value, index) => (
                             <tr>
                                 <th>
-                                    <a href={'/article_page/' + json_value.article_id}>{json_value.article_name}</a>
+                                    <a href={'http://localhost:3000/article_page/' + json_value.article_id}>{json_value.article_name}</a>
                                 </th>
                                 {json_value.author_info.map((value) => (
                                     <th>
-                                        <a href={'/author_page/' + value.author_id}>{value.author_name}</a>
+                                        <a href={'http://localhost:3000/author_page/' + value.author_id}>{value.author_name}</a>
                                     </th>
                                 ))}
                             </tr>

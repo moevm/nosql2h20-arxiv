@@ -34,7 +34,7 @@ def get_article_page(article_page,req):
 
 class Article_page(Resource):
     def get(self):
-        req = DatabaseRequester("bolt://localhost:7687", "neo4j", "password")
+        req = DatabaseRequester("bolt://arxiv_neo4j:7687", "neo4j", "password")
         args = parser.parse_args()
         print(args)
         article_page = args.get('article_page')
